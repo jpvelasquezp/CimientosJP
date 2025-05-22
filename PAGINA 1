@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CimientosJP S.A.S. - Construyendo Futuros Sólidos con Innovación IA</title>
+    <meta name="description" content="CimientosJP S.A.S. ofrece servicios de construcción, diseño y consultoría de alta calidad, ahora con herramientas IA para inspirar y definir tu proyecto.">
+    <meta name="keywords" content="construcción, diseño, arquitectura, ingeniería civil, consultoría, IA en construcción, CimientosJP, Bogotá, Colombia">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://placehold.co/1920x800/374151/e0e7ff?text=Proyectos+Inspiradores');
+            background-size: cover;
+            background-position: center;
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover,
+        .nav-link.active {
+            color: #F59E0B; /* amber-500 */
+            border-bottom-color: #F59E0B;
+        }
+        .cta-button {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+        .section-title {
+            border-bottom: 3px solid #F59E0B; /* amber-500 */
+            padding-bottom: 0.75rem; /* pb-3 */
+            display: inline-block;
+        }
+        .page-section {
+            display: none; /* Initially hide all sections */
+            padding-top: 4rem; /* pt-16 */
+            padding-bottom: 4rem; /* pb-16 */
+        }
+        .page-section.active {
+            display: block;
+            animation: fadeInAnimation 0.7s ease-in-out forwards;
+        }
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e5e7eb; /* gray-200 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9ca3af; /* gray-400 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* gray-500 */
+        }
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #F59E0B; /* Amber */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .gemini-output {
+            background-color: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            white-space: pre-wrap; /* To preserve line breaks from Gemini */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="header" class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-20">
+                <a href="#home" class="text-2xl sm:text-3xl font-bold text-slate-700 hover:text-amber-500 transition-colors page-linker">
+                    Cimientos<span class="text-amber-500">JP</span> S.A.S.
+                </a>
+                <div class="hidden md:flex space-x-4 lg:space-x-6">
+                    <a href="#home" class="nav-link page-linker active">Inicio</a>
+                    <a href="#about" class="nav-link page-linker">Sobre Nosotros</a>
+                    <a href="#services" class="nav-link page-linker">Servicios</a>
+                    <a href="#projects" class="nav-link page-linker">Proyectos</a>
+                    <a href="#project-ideas-assistant" class="nav-link page-linker">✨ Asistente Proyectos</a>
+                    <a href="#news" class="nav-link page-linker">Noticias</a>
+                    <a href="#contact" class="nav-link page-linker">Contacto</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-700 hover:text-amber-500 focus:outline-none">
+                        <i class="fas fa-bars fa-lg"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md absolute w-full">
+            <a href="#home" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">Inicio</a>
+            <a href="#about" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">Sobre Nosotros</a>
+            <a href="#services" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">Servicios</a>
+            <a href="#projects" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">Proyectos</a>
+            <a href="#project-ideas-assistant" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">✨ Asistente Proyectos</a>
+            <a href="#news" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">Noticias</a>
+            <a href="#contact" class="block py-3 px-4 text-slate-700 hover:bg-amber-500 hover:text-white transition-colors page-linker">Contacto</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <section id="home" class="page-section active">
+            <div class="hero-bg text-white min-h-[calc(100vh-5rem)] flex items-center justify-center">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        Cimientos <span class="text-amber-400">Sólidos</span> para Proyectos <span class="text-amber-400">Excepcionales</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+                        Transformamos ideas en realidad con profesionalismo, innovación y compromiso en cada proyecto. Descubre cómo nuestra IA puede ayudarte.
+                    </p>
+                    <div class="space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#contact" class="cta-button bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-lg text-lg inline-block page-linker">
+                            Solicita una Consulta
+                        </a>
+                        <a href="#project-ideas-assistant" class="cta-button bg-transparent hover:bg-amber-500 border-2 border-amber-500 text-amber-500 hover:text-white font-semibold py-3 px-8 rounded-lg text-lg inline-block page-linker">
+                           ✨ Inspiración para Proyectos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-16 bg-white">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-12 section-title">Nuestros Servicios Principales</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="text-center p-6 bg-slate-50 rounded-lg shadow-md card-hover">
+                            <i class="fas fa-drafting-compass fa-3x text-amber-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Diseño y Arquitectura</h3>
+                            <p class="text-slate-600">Soluciones creativas y funcionales para tus proyectos.</p>
+                            <a href="#services" class="text-amber-500 hover:text-amber-600 font-semibold mt-4 inline-block page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                        </div>
+                        <div class="text-center p-6 bg-slate-50 rounded-lg shadow-md card-hover">
+                            <i class="fas fa-tasks fa-3x text-amber-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Gestión de Proyectos</h3>
+                            <p class="text-slate-600">Coordinación experta para garantizar el éxito.</p>
+                             <a href="#services" class="text-amber-500 hover:text-amber-600 font-semibold mt-4 inline-block page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                        </div>
+                        <div class="text-center p-6 bg-slate-50 rounded-lg shadow-md card-hover">
+                            <i class="fas fa-hard-hat fa-3x text-amber-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Construcción General</h3>
+                            <p class="text-slate-600">Ejecución de obras con los más altos estándares.</p>
+                             <a href="#services" class="text-amber-500 hover:text-amber-600 font-semibold mt-4 inline-block page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                        </div>
+                        <div class="text-center p-6 bg-slate-50 rounded-lg shadow-md card-hover">
+                            <i class="fas fa-comments-dollar fa-3x text-amber-500 mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Consultoría Especializada</h3>
+                            <p class="text-slate-600">Asesoramiento experto para optimizar tus inversiones.</p>
+                             <a href="#services" class="text-amber-500 hover:text-amber-600 font-semibold mt-4 inline-block page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-16 bg-slate-100">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-12 section-title">Lo que dicen nuestros clientes</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <p class="text-slate-600 italic mb-4">"CimientosJP S.A.S. superó nuestras expectativas. Profesionalismo y calidad de principio a fin."</p>
+                            <p class="font-semibold text-slate-700">- Cliente Satisfecho 1</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <p class="text-slate-600 italic mb-4">"Excelente gestión de proyecto y atención al detalle. Los recomiendo ampliamente."</p>
+                            <p class="font-semibold text-slate-700">- Cliente Satisfecho 2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-12 section-title">Últimas Noticias</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                            <img src="https://placehold.co/600x400/a5b4fc/ffffff?text=Noticia+1" alt="Imagen de Noticia 1" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Innovaciones en Construcción Sostenible</h3>
+                                <p class="text-slate-600 text-sm mb-4">Descubre las últimas tendencias que están...</p>
+                                <a href="#news" class="text-amber-500 hover:text-amber-600 font-semibold page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                            <img src="https://placehold.co/600x400/818cf8/ffffff?text=Noticia+2" alt="Imagen de Noticia 2" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">CimientosJP en la Feria de Construcción</h3>
+                                <p class="text-slate-600 text-sm mb-4">Participamos activamente en el evento más...</p>
+                                <a href="#news" class="text-amber-500 hover:text-amber-600 font-semibold page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                            <img src="https://placehold.co/600x400/6366f1/ffffff?text=Noticia+3" alt="Imagen de Noticia 3" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Consejos para tu Próximo Proyecto</h3>
+                                <p class="text-slate-600 text-sm mb-4">Claves para una planificación exitosa y...</p>
+                                <a href="#news" class="text-amber-500 hover:text-amber-600 font-semibold page-linker">Leer Más <i class="fas fa-arrow-right text-xs ml-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="page-section bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title">Sobre Nosotros</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="https://placehold.co/600x400/94a3b8/ffffff?text=Nuestro+Equipo" alt="Equipo de CimientosJP" class="rounded-lg shadow-xl" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4">Nuestra Historia y Misión</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">
+                            En CimientosJP S.A.S., nacimos de la pasión por construir y transformar el entorno. Desde nuestra fundación, nos hemos dedicado a ofrecer soluciones integrales en el sector de la construcción, guiados por la excelencia y la innovación. Nuestra misión es ser el socio estratégico que materializa los sueños y proyectos de nuestros clientes, construyendo cimientos sólidos para un futuro excepcional.
+                        </p>
+                        <h3 class="text-2xl font-semibold mb-4">Visión</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">
+                            Ser reconocidos como líderes en el sector de la construcción y consultoría, destacando por nuestra calidad, cumplimiento y la generación de valor sostenible para nuestros clientes, colaboradores y la sociedad.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-16">
+                    <h3 class="text-2xl font-semibold mb-6 text-center">Nuestros Valores Corporativos</h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="p-6 bg-slate-50 rounded-lg shadow text-center">
+                            <i class="fas fa-handshake fa-2x text-amber-500 mb-3"></i>
+                            <h4 class="font-semibold text-lg">Transparencia</h4>
+                            <p class="text-sm text-slate-600">Comunicación abierta y honesta en cada etapa.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg shadow text-center">
+                            <i class="fas fa-lightbulb fa-2x text-amber-500 mb-3"></i>
+                            <h4 class="font-semibold text-lg">Innovación</h4>
+                            <p class="text-sm text-slate-600">Buscamos constantemente nuevas y mejores formas de hacer las cosas.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg shadow text-center">
+                            <i class="fas fa-medal fa-2x text-amber-500 mb-3"></i>
+                            <h4 class="font-semibold text-lg">Calidad</h4>
+                            <p class="text-sm text-slate-600">Compromiso con los más altos estándares en materiales y procesos.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg shadow text-center">
+                            <i class="fas fa-users fa-2x text-amber-500 mb-3"></i>
+                            <h4 class="font-semibold text-lg">Compromiso</h4>
+                            <p class="text-sm text-slate-600">Dedicación total para cumplir con los objetivos de nuestros clientes.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg shadow text-center">
+                            <i class="fas fa-leaf fa-2x text-amber-500 mb-3"></i>
+                            <h4 class="font-semibold text-lg">Sostenibilidad</h4>
+                            <p class="text-sm text-slate-600">Prácticas responsables con el medio ambiente y la comunidad.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg shadow text-center">
+                            <i class="fas fa-universal-access fa-2x text-amber-500 mb-3"></i>
+                            <h4 class="font-semibold text-lg">Accesibilidad</h4>
+                            <p class="text-sm text-slate-600">Procuramos que nuestros servicios y plataformas sean accesibles para todos. <a href="#declaracion-accesibilidad" class="text-amber-500 hover:underline page-linker">Ver Declaración</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-16">
+                    <h3 class="text-2xl font-semibold mb-8 text-center">Nuestro Equipo</h3>
+                    <div class="max-w-4xl mx-auto">
+                        <div class="bg-slate-50 p-8 rounded-lg shadow-lg text-center">
+                            <img src="https://placehold.co/150x150/cbd5e1/334155?text=JPVP" alt="Juan Pablo Velásquez Prieto" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/ffffff?text=Error+Imagen';">
+                            <h4 class="text-xl font-bold text-slate-800">Juan Pablo Velásquez Prieto</h4>
+                            <p class="text-amber-600 font-semibold mb-2">CEO y Fundador</p>
+                            <p class="text-slate-600 leading-relaxed">
+                                Con una sólida formación en Ingeniería Civil y una visión clara del futuro de la construcción, Juan Pablo lidera CimientosJP S.A.S. con pasión y un compromiso inquebrantable con la excelencia. Su experiencia en gestión de proyectos y su enfoque en la innovación son pilares fundamentales de nuestra empresa.
+                            </p>
+                        </div>
+                        </div>
+                </div>
+
+                <div class="mt-16 text-center">
+                     <h3 class="text-2xl font-semibold mb-4">Filosofía de Trabajo</h3>
+                     <p class="text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                        Nuestra filosofía se centra en la planificación meticulosa, la gestión proactiva de riesgos, la eficiencia operativa y el cumplimiento riguroso de los plazos y presupuestos. Creemos en la colaboración estrecha con nuestros clientes para asegurar que cada proyecto sea un reflejo fiel de sus aspiraciones.
+                     </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title">Nuestros Servicios</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-lg shadow-xl card-hover">
+                        <i class="fas fa-ruler-combined fa-3x text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Diseño de Planos (Arquitectura e Ingeniería)</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Creamos diseños arquitectónicos y de ingeniería detallados, incluyendo visualizaciones 3D, planos técnicos y especificaciones constructivas, adaptados a las necesidades de cada proyecto.
+                        </p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Planos arquitectónicos completos</li>
+                            <li>Diseños estructurales y de instalaciones</li>
+                            <li>Modelado 3D y Renders</li>
+                            <li>Documentación técnica para licencias</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-xl card-hover">
+                        <i class="fas fa-calculator fa-3x text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Análisis y Diseño de Costos y Presupuestos</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Ofrecemos un análisis exhaustivo de costos y la elaboración de presupuestos precisos, optimizando recursos y asegurando la viabilidad financiera de su proyecto.
+                        </p>
+                         <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Estimación detallada de costos</li>
+                            <li>Optimización de presupuestos</li>
+                            <li>Análisis de viabilidad financiera</li>
+                            <li>Control de costos durante la ejecución</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-xl card-hover">
+                        <i class="fas fa-gavel fa-3x text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Asesoría y Gestión de Licitaciones</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Guiamos a nuestros clientes a través de complejos procesos de licitación, desde la preparación de propuestas hasta la adjudicación, maximizando sus oportunidades de éxito.
+                        </p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Preparación de documentos de licitación</li>
+                            <li>Análisis de pliegos y requisitos</li>
+                            <li>Estrategias de presentación</li>
+                            <li>Soporte en negociaciones</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-xl card-hover">
+                        <i class="fas fa-chalkboard-teacher fa-3x text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Consultoría Especializada</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Brindamos consultoría experta en áreas clave como estudios de viabilidad, gestión de riesgos, implementación de prácticas sostenibles y optimización de procesos constructivos.
+                        </p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Estudios de factibilidad técnica y económica</li>
+                            <li>Gestión integral de riesgos</li>
+                            <li>Consultoría en construcción sostenible</li>
+                            <li>Optimización de flujos de trabajo</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-xl card-hover">
+                        <i class="fas fa-city fa-3x text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Construcción General</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Ejecutamos proyectos de construcción de diversa envergadura, asegurando la calidad, el cumplimiento de plazos y la seguridad en obra, desde la cimentación hasta los acabados finales.
+                        </p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Ejecución de obras civiles y edificaciones</li>
+                            <li>Gestión de calidad en sitio</li>
+                            <li>Supervisión técnica</li>
+                            <li>Entrega de proyectos llave en mano</li>
+                        </ul>
+                    </div>
+                     <div class="bg-white p-8 rounded-lg shadow-xl card-hover">
+                        <i class="fas fa-chart-line fa-3x text-amber-500 mb-6"></i>
+                        <h3 class="text-2xl font-semibold mb-3">Gestión de Proyectos</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Lideramos y coordinamos todas las fases de su proyecto, desde la concepción hasta la entrega final, asegurando la eficiencia, el control de costos y la comunicación fluida.
+                        </p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Planificación integral del proyecto</li>
+                            <li>Coordinación de equipos y contratistas</li>
+                            <li>Seguimiento y control de avances</li>
+                            <li>Reportes periódicos y transparentes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="page-section bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title">Nuestro Portafolio</h2>
+                <p class="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
+                    Explora una selección de nuestros proyectos. Aunque algunos son conceptuales o renders de alta calidad, todos demuestran nuestra capacidad de diseño, planificación y visión para el futuro.
+                </p>
+                <div class="text-center mb-8">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="residencial">Residencial</button>
+                    <button class="filter-btn" data-filter="comercial">Comercial</button>
+                    <button class="filter-btn" data-filter="institucional">Institucional</button>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 project-gallery">
+                    <div class="bg-slate-50 rounded-lg shadow-lg overflow-hidden card-hover project-item residencial">
+                        <img src="https://placehold.co/600x400/fde047/334155?text=Proyecto+Residencial+Alfa" alt="Proyecto Residencial Alfa" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Edificio Residencial Alfa (Conceptual)</h3>
+                            <p class="text-sm text-slate-600 mb-1"><i class="fas fa-map-marker-alt mr-1 text-amber-500"></i> Bogotá D.C.</p>
+                            <p class="text-sm text-slate-600 mb-3"><i class="fas fa-tag mr-1 text-amber-500"></i> Tipo: Residencial</p>
+                            <p class="text-slate-600 text-sm">Diseño innovador para un complejo de apartamentos modernos, enfocado en sostenibilidad y confort.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 rounded-lg shadow-lg overflow-hidden card-hover project-item comercial">
+                        <img src="https://placehold.co/600x400/fbbf24/334155?text=Centro+Comercial+Beta" alt="Centro Comercial Beta" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Centro Comercial Beta (Render)</h3>
+                            <p class="text-sm text-slate-600 mb-1"><i class="fas fa-map-marker-alt mr-1 text-amber-500"></i> Medellín, Antioquia</p>
+                            <p class="text-sm text-slate-600 mb-3"><i class="fas fa-tag mr-1 text-amber-500"></i> Tipo: Comercial</p>
+                            <p class="text-slate-600 text-sm">Visualización de un espacio comercial dinámico y atractivo, diseñado para maximizar la experiencia del visitante.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 rounded-lg shadow-lg overflow-hidden card-hover project-item institucional">
+                        <img src="https://placehold.co/600x400/f59e0b/334155?text=Escuela+Gamma" alt="Escuela Gamma" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Escuela Gamma (Diseño)</h3>
+                            <p class="text-sm text-slate-600 mb-1"><i class="fas fa-map-marker-alt mr-1 text-amber-500"></i> Cali, Valle</p>
+                            <p class="text-sm text-slate-600 mb-3"><i class="fas fa-tag mr-1 text-amber-500"></i> Tipo: Institucional</p>
+                            <p class="text-slate-600 text-sm">Propuesta de diseño para una institución educativa moderna, funcional y adaptada a las necesidades pedagógicas actuales.</p>
+                        </div>
+                    </div>
+                     <div class="bg-slate-50 rounded-lg shadow-lg overflow-hidden card-hover project-item residencial">
+                        <img src="https://placehold.co/600x400/facc15/334155?text=Vivienda+Delta" alt="Vivienda Delta" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Vivienda Unifamiliar Delta (Conceptual)</h3>
+                            <p class="text-sm text-slate-600 mb-1"><i class="fas fa-map-marker-alt mr-1 text-amber-500"></i> La Calera, Cundinamarca</p>
+                            <p class="text-sm text-slate-600 mb-3"><i class="fas fa-tag mr-1 text-amber-500"></i> Tipo: Residencial</p>
+                            <p class="text-slate-600 text-sm">Concepto de vivienda de lujo integrada con el paisaje, priorizando vistas y materiales naturales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="project-ideas-assistant" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title">✨ Asistente de Ideas para Proyectos</h2>
+                <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+                    <p class="text-slate-600 mb-6 text-center">
+                        ¿Necesitas inspiración para tu próximo proyecto de construcción? Describe brevemente tu idea o el tipo de proyecto (ej: "casa campestre moderna", "remodelación de oficina", "edificio de apartamentos sostenible") y nuestra IA te ayudará con algunas ideas.
+                    </p>
+                    <div class="mb-4">
+                        <label for="projectIdeaInput" class="block text-slate-700 font-semibold mb-2">Describe tu idea o tipo de proyecto:</label>
+                        <textarea id="projectIdeaInput" name="projectIdeaInput" rows="3" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" placeholder="Ej: Edificio residencial con enfoque ecológico"></textarea>
+                    </div>
+                    <button id="generateProjectIdeaBtn" class="cta-button w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg text-lg flex items-center justify-center">
+                        Generar Ideas con IA
+                        <span id="projectIdeaLoading" class="hidden loader ml-2"></span>
+                    </button>
+                    <div id="projectIdeaResult" class="mt-6">
+                        </div>
+                     <p id="projectIdeaError" class="mt-4 text-sm text-red-600 text-center hidden"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title">Noticias y Blog</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden card-hover">
+                        <img src="https://placehold.co/600x400/a5b4fc/334155?text=Blog+Post+1" alt="Imagen Artículo 1" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <p class="text-sm text-amber-500 font-semibold mb-1">TENDENCIAS</p>
+                            <h3 class="text-xl font-semibold mb-3">El Futuro de la Construcción: Tecnologías Emergentes</h3>
+                            <p class="text-slate-600 text-sm mb-4">Exploramos cómo la IA, los drones y la impresión 3D están revolucionando el sector.</p>
+                            <a href="#" class="text-slate-700 hover:text-amber-600 font-semibold">Leer Artículo Completo <i class="fas fa-long-arrow-alt-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden card-hover">
+                        <img src="https://placehold.co/600x400/818cf8/334155?text=Blog+Post+2" alt="Imagen Artículo 2" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <p class="text-sm text-amber-500 font-semibold mb-1">CONSEJOS</p>
+                            <h3 class="text-xl font-semibold mb-3">5 Claves para una Gestión de Proyectos Exitosa</h3>
+                            <p class="text-slate-600 text-sm mb-4">Consejos prácticos para asegurar que tu proyecto de construcción se complete a tiempo y dentro del presupuesto.</p>
+                            <a href="#" class="text-slate-700 hover:text-amber-600 font-semibold">Leer Artículo Completo <i class="fas fa-long-arrow-alt-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden card-hover">
+                        <img src="https://placehold.co/600x400/6366f1/334155?text=Blog+Post+3" alt="Imagen Artículo 3" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Error+Imagen';">
+                        <div class="p-6">
+                            <p class="text-sm text-amber-500 font-semibold mb-1">EMPRESA</p>
+                            <h3 class="text-xl font-semibold mb-3">CimientosJP Anuncia Nueva Alianza Estratégica</h3>
+                            <p class="text-slate-600 text-sm mb-4">Detalles sobre nuestra colaboración para expandir nuestros servicios de consultoría especializada.</p>
+                            <a href="#" class="text-slate-700 hover:text-amber-600 font-semibold">Leer Artículo Completo <i class="fas fa-long-arrow-alt-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="page-section bg-slate-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title">Contáctanos</h2>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="bg-white p-8 rounded-lg shadow-xl">
+                        <h3 class="text-2xl font-semibold mb-6">Envíanos un Mensaje</h3>
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <label for="name" class="block text-slate-700 font-semibold mb-2">Nombre Completo</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-slate-700 font-semibold mb-2">Correo Electrónico</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="phone" class="block text-slate-700 font-semibold mb-2">Teléfono (Opcional)</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none">
+                            </div>
+                            <div class="mb-4">
+                                <label for="subject" class="block text-slate-700 font-semibold mb-2">Asunto</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="message" class="block text-slate-700 font-semibold mb-2">Mensaje</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none" required></textarea>
+                            </div>
+                            <div class="mb-6 text-right">
+                                <button type="button" id="enhanceDescriptionBtn" class="text-sm bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg inline-flex items-center">
+                                    ✨ Mejorar Descripción con IA
+                                    <span id="descriptionEnhancerLoading" class="hidden loader ml-2"></span>
+                                </button>
+                                <p id="descriptionEnhancerStatus" class="text-xs text-slate-500 mt-1"></p>
+                            </div>
+                            <button type="submit" class="cta-button w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-6 rounded-lg text-lg">
+                                Enviar Mensaje
+                            </button>
+                            <p id="form-message" class="mt-4 text-sm"></p>
+                        </form>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="bg-white p-8 rounded-lg shadow-xl">
+                            <h3 class="text-2xl font-semibold mb-4">Información Directa</h3>
+                            <p class="text-slate-600 mb-3 flex items-center">
+                                <i class="fas fa-phone fa-fw mr-3 text-amber-500"></i> +57 (XXX) XXX XXXX (Actualizar Teléfono)
+                            </p>
+                            <p class="text-slate-600 mb-3 flex items-center">
+                                <i class="fas fa-envelope fa-fw mr-3 text-amber-500"></i> <a href="mailto:JUAN2001PA3.4@GMAIL.COM" class="hover:text-amber-600">JUAN2001PA3.4@GMAIL.COM</a>
+                            </p>
+                            <p class="text-slate-600 flex items-start">
+                                <i class="fas fa-map-marker-alt fa-fw mr-3 text-amber-500 mt-1"></i> Dirección de la oficina (Ej: Cra X # Y-Z, Bogotá D.C., Colombia)
+                            </p>
+                        </div>
+                        <div class="bg-white p-8 rounded-lg shadow-xl">
+                             <h3 class="text-2xl font-semibold mb-4">Nuestra Ubicación</h3>
+                            <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+                                <img src="https://placehold.co/600x350/e2e8f0/64748b?text=Mapa+de+Ubicaci%C3%B3n" alt="Mapa de ubicación" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x350/cccccc/ffffff?text=Error+Imagen';">
+                                </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-lg shadow-xl">
+                             <h3 class="text-2xl font-semibold mb-4">Síguenos</h3>
+                             <div class="flex space-x-4">
+                                <a href="#" class="text-slate-500 hover:text-amber-500 transition-colors text-2xl"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="text-slate-500 hover:text-amber-500 transition-colors text-2xl"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="text-slate-500 hover:text-amber-500 transition-colors text-2xl"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="text-slate-500 hover:text-amber-500 transition-colors text-2xl"><i class="fab fa-twitter"></i></a>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="politica-reembolso" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 prose lg:prose-xl max-w-4xl">
+                <h2 class="section-title">Política de Reembolso</h2>
+                <p>En CimientosJP S.A.S., nos comprometemos a la satisfacción de nuestros clientes. Nuestra política de reembolso se aplica de la siguiente manera:</p>
+                <p>[Contenido detallado de la política de reembolso...]</p>
+                <p>Última actualización: [Fecha]</p>
+            </div>
+        </section>
+
+        <section id="terminos-condiciones" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 prose lg:prose-xl max-w-4xl">
+                <h2 class="section-title">Términos y Condiciones Generales de Servicio</h2>
+                <p>Al utilizar nuestros servicios, usted acepta los siguientes términos y condiciones:</p>
+                <p>[Contenido detallado de los términos y condiciones...]</p>
+                <p>Última actualización: [Fecha]</p>
+            </div>
+        </section>
+
+        <section id="politica-tratamiento-datos" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 prose lg:prose-xl max-w-4xl">
+                <h2 class="section-title">Política de Tratamiento de Datos Personales</h2>
+                <p>CimientosJP S.A.S., identificada con NIT [Número de NIT], con domicilio en [Dirección], correo electrónico JUAN2001PA3.4@GMAIL.COM y teléfono [Número de Teléfono], se compromete a proteger su privacidad.</p>
+                <p>[Contenido detallado de la política de tratamiento de datos, conforme a la Ley 1581 de 2012 y decretos reglamentarios...]</p>
+                <p>Última actualización: [Fecha]</p>
+            </div>
+        </section>
+
+        <section id="declaracion-accesibilidad" class="page-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 prose lg:prose-xl max-w-4xl">
+                <h2 class="section-title">Declaración de Accesibilidad</h2>
+                <p>En CimientosJP S.A.S. estamos comprometidos con la accesibilidad digital para todas las personas, incluyendo aquellas con discapacidades. Nos esforzamos por mejorar continuamente la experiencia del usuario para todos y aplicar los estándares de accesibilidad relevantes.</p>
+                <p>[Detalles sobre las medidas tomadas, conformidad con WCAG, etc...]</p>
+                <p>Si tiene alguna dificultad para acceder a cualquier parte de este sitio web, por favor contáctenos en JUAN2001PA3.4@GMAIL.COM.</p>
+                <p>Última actualización: [Fecha]</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">CimientosJP S.A.S.</h3>
+                    <p class="text-sm leading-relaxed">Construyendo cimientos sólidos para proyectos excepcionales. Su socio confiable en diseño, construcción y consultoría.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about" class="hover:text-amber-400 transition-colors page-linker">Sobre Nosotros</a></li>
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors page-linker">Servicios</a></li>
+                        <li><a href="#projects" class="hover:text-amber-400 transition-colors page-linker">Proyectos</a></li>
+                        <li><a href="#project-ideas-assistant" class="hover:text-amber-400 transition-colors page-linker">✨ Asistente Proyectos</a></li>
+                        <li><a href="#contact" class="hover:text-amber-400 transition-colors page-linker">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Políticas</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#politica-reembolso" class="hover:text-amber-400 transition-colors page-linker">Política de Reembolso</a></li>
+                        <li><a href="#terminos-condiciones" class="hover:text-amber-400 transition-colors page-linker">Términos y Condiciones</a></li>
+                        <li><a href="#politica-tratamiento-datos" class="hover:text-amber-400 transition-colors page-linker">Tratamiento de Datos</a></li>
+                        <li><a href="#declaracion-accesibilidad" class="hover:text-amber-400 transition-colors page-linker">Declaración de Accesibilidad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Contacto Directo</h3>
+                    <p class="text-sm mb-2 flex items-center"><i class="fas fa-phone mr-2 text-amber-400"></i> [Actualizar Teléfono]</p>
+                    <p class="text-sm mb-2 flex items-center"><i class="fas fa-envelope mr-2 text-amber-400"></i> <a href="mailto:JUAN2001PA3.4@GMAIL.COM" class="hover:text-amber-400">JUAN2001PA3.4@GMAIL.COM</a></p>
+                    <p class="text-sm flex items-start"><i class="fas fa-map-marker-alt mr-2 text-amber-400 mt-1"></i> [Dirección Oficina, Bogotá]</p>
+                    <div class="mt-4 flex space-x-3">
+                        <a href="#" aria-label="Facebook CimientosJP" class="text-slate-400 hover:text-amber-400 transition-colors"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" aria-label="Instagram CimientosJP" class="text-slate-400 hover:text-amber-400 transition-colors"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" aria-label="LinkedIn CimientosJP" class="text-slate-400 hover:text-amber-400 transition-colors"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 pt-8 text-center text-sm">
+                <p>&copy; <span id="currentYear"></span> CimientosJP S.A.S. Todos los derechos reservados.</p>
+                <p>Diseñado con <i class="fas fa-heart text-amber-500"></i> por [Tu Nombre/Nombre de Agencia si aplica]. Potenciado con IA ✨.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <button id="backToTopBtn" class="fixed bottom-5 right-5 bg-amber-500 hover:bg-amber-600 text-white p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pageLinkers = document.querySelectorAll('.page-linker');
+            const navLinks = document.querySelectorAll('header nav a.page-linker, #mobile-menu a.page-linker');
+            const sections = document.querySelectorAll('.page-section');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const header = document.getElementById('header');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+
+            // --- Start of Gemini API Integration ---
+            const projectIdeaInput = document.getElementById('projectIdeaInput');
+            const generateProjectIdeaBtn = document.getElementById('generateProjectIdeaBtn');
+            const projectIdeaResult = document.getElementById('projectIdeaResult');
+            const projectIdeaLoading = document.getElementById('projectIdeaLoading');
+            const projectIdeaError = document.getElementById('projectIdeaError');
+
+            const messageTextarea = document.getElementById('message');
+            const enhanceDescriptionBtn = document.getElementById('enhanceDescriptionBtn');
+            const descriptionEnhancerLoading = document.getElementById('descriptionEnhancerLoading');
+            const descriptionEnhancerStatus = document.getElementById('descriptionEnhancerStatus');
+            
+            const apiKey = ""; // API Key for Gemini (leave empty as per instructions)
+
+            async function callGeminiAPI(prompt) {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Error de API:", response.status, errorData);
+                        return { success: false, error: `Error ${response.status}: ${errorData?.error?.message || 'No se pudo conectar con el servicio de IA.'}` };
+                    }
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return { success: true, text: result.candidates[0].content.parts[0].text };
+                    } else {
+                        console.error("Respuesta inesperada de la API:", result);
+                        return { success: false, error: "La IA no pudo generar una respuesta en este momento. Inténtalo de nuevo." };
+                    }
+                } catch (error) {
+                    console.error("Error en la llamada a la API:", error);
+                    return { success: false, error: "Error de conexión con el servicio de IA. Verifica tu conexión a internet." };
+                }
+            }
+
+            if (generateProjectIdeaBtn) {
+                generateProjectIdeaBtn.addEventListener('click', async () => {
+                    const userInput = projectIdeaInput.value.trim();
+                    if (!userInput) {
+                        projectIdeaError.textContent = "Por favor, ingresa una descripción o tipo de proyecto.";
+                        projectIdeaError.classList.remove('hidden');
+                        projectIdeaResult.innerHTML = "";
+                        return;
+                    }
+
+                    projectIdeaLoading.classList.remove('hidden');
+                    generateProjectIdeaBtn.disabled = true;
+                    projectIdeaResult.innerHTML = "";
+                    projectIdeaError.classList.add('hidden');
+
+                    const prompt = `Eres un consultor creativo de proyectos de construcción para "CimientosJP S.A.S.". Basado en la siguiente descripción o tipo de proyecto, genera 3 ideas innovadoras o consideraciones clave para un proyecto de construcción. Formatea tu respuesta como una lista clara y concisa, ideal para un cliente potencial. Descripción/Tipo de proyecto: "${userInput}"`;
+                    
+                    const response = await callGeminiAPI(prompt);
+
+                    projectIdeaLoading.classList.add('hidden');
+                    generateProjectIdeaBtn.disabled = false;
+
+                    if (response.success) {
+                        projectIdeaResult.innerHTML = `<h4 class="text-lg font-semibold mb-2 text-slate-700">Ideas Sugeridas:</h4><div class="gemini-output">${response.text.replace(/\n/g, '<br>')}</div>`;
+                    } else {
+                        projectIdeaError.textContent = response.error || "Ocurrió un error al generar ideas.";
+                        projectIdeaError.classList.remove('hidden');
+                    }
+                });
+            }
+
+            if (enhanceDescriptionBtn) {
+                enhanceDescriptionBtn.addEventListener('click', async () => {
+                    const currentMessage = messageTextarea.value.trim();
+                    if (!currentMessage) {
+                        descriptionEnhancerStatus.textContent = "Escribe primero tu mensaje.";
+                        descriptionEnhancerStatus.className = 'text-xs text-red-500 mt-1';
+                        return;
+                    }
+
+                    descriptionEnhancerLoading.classList.remove('hidden');
+                    enhanceDescriptionBtn.disabled = true;
+                    descriptionEnhancerStatus.textContent = "Mejorando descripción...";
+                    descriptionEnhancerStatus.className = 'text-xs text-blue-500 mt-1';
+                    
+                    const prompt = `Eres un asistente experto en redacción para la empresa constructora "CimientosJP S.A.S.". Mejora la siguiente descripción de un proyecto de construcción para que sea más clara, concisa, detallada y profesional. Enfócate en los aspectos que una constructora necesitaría saber para una cotización o consulta inicial. Mantén un tono amable y colaborativo. Aquí está la descripción original: "${currentMessage}"`;
+
+                    const response = await callGeminiAPI(prompt);
+
+                    descriptionEnhancerLoading.classList.add('hidden');
+                    enhanceDescriptionBtn.disabled = false;
+
+                    if (response.success) {
+                        messageTextarea.value = response.text;
+                        descriptionEnhancerStatus.textContent = "¡Descripción mejorada por IA!";
+                        descriptionEnhancerStatus.className = 'text-xs text-green-600 mt-1';
+                    } else {
+                        descriptionEnhancerStatus.textContent = response.error || "Error al mejorar. Intenta de nuevo.";
+                        descriptionEnhancerStatus.className = 'text-xs text-red-500 mt-1';
+                    }
+                });
+            }
+            // --- End of Gemini API Integration ---
+
+
+            // Función para mostrar la sección activa y actualizar enlaces de navegación
+            function setActiveSection(targetId) {
+                // Si el targetId no existe, default a 'home' y no hacer nada más si es el caso.
+                if (!document.getElementById(targetId)) {
+                    if (targetId !== 'home') { // Evita bucle si 'home' no existe por alguna razón
+                        console.warn(`Sección con ID "${targetId}" no encontrada. Redirigiendo a Inicio.`);
+                        targetId = 'home'; 
+                        if (!document.getElementById(targetId)) { // Si 'home' tampoco existe
+                             console.error("La sección 'home' no existe. No se puede navegar.");
+                             return; // Salir si 'home' no existe
+                        }
+                    } else if (!document.getElementById('home')) {
+                        console.error("La sección 'home' no existe. No se puede navegar.");
+                        return; // Salir si 'home' no existe
+                    }
+                }
+
+
+                sections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === '#' + targetId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                // Cerrar menú móvil después de la navegación
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                window.scrollTo(0,0); 
+            }
+
+            pageLinkers.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    setActiveSection(targetId);
+                });
+            });
+            
+            let initialSectionId = window.location.hash ? window.location.hash.substring(1) : 'home';
+            if (!document.getElementById(initialSectionId) && document.getElementById('home')) { // Verifica si la sección inicial existe, sino default a home
+                initialSectionId = 'home';
+            } else if (!document.getElementById(initialSectionId) && !document.getElementById('home')) {
+                 console.error("Ni la sección por hash ni 'home' existen. No se puede establecer sección inicial.");
+            }
+            if (document.getElementById(initialSectionId)) { // Solo activar si la sección (inicial o home) existe
+                setActiveSection(initialSectionId);
+            }
+
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function () {
+                    if (mobileMenu) mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            const currentYearEl = document.getElementById('currentYear');
+            if (currentYearEl) {
+                currentYearEl.textContent = new Date().getFullYear();
+            }
+
+
+            window.addEventListener('scroll', function() {
+                if (header) {
+                    if (window.scrollY > 50) {
+                        header.classList.add('h-16');
+                        header.classList.remove('h-20');
+                    } else {
+                        header.classList.add('h-20');
+                        header.classList.remove('h-16');
+                    }
+                }
+                if (backToTopBtn) {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.remove('opacity-0');
+                    } else {
+                        backToTopBtn.classList.add('opacity-0');
+                    }
+                }
+            });
+            
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectItems = document.querySelectorAll('.project-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active', 'bg-amber-500', 'text-white'));
+                    this.classList.add('active', 'bg-amber-500', 'text-white');
+                    this.classList.remove('text-slate-700', 'hover:bg-amber-100');
+
+                    const filter = this.getAttribute('data-filter');
+                    projectItems.forEach(item => {
+                        item.style.display = 'none'; 
+                        if (filter === 'all' || item.classList.contains(filter)) {
+                            item.classList.remove('hidden');
+                            item.style.display = 'block'; 
+                            item.style.animation = 'fadeInAnimation 0.5s ease-in-out';
+                        }
+                    });
+                });
+            });
+            filterButtons.forEach(button => {
+                if (!button.classList.contains('active')) {
+                    button.classList.add('text-slate-700', 'bg-slate-200', 'hover:bg-amber-100', 'py-2', 'px-4', 'rounded-md', 'transition-colors', 'mr-2', 'mb-2');
+                } else {
+                     button.classList.add('bg-amber-500', 'text-white', 'py-2', 'px-4', 'rounded-md', 'transition-colors', 'mr-2', 'mb-2');
+                }
+            });
+
+            const contactForm = document.getElementById('contactForm');
+            const formMessage = document.getElementById('form-message');
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if(formMessage) {
+                        formMessage.textContent = 'Enviando mensaje...';
+                        formMessage.className = 'mt-4 text-sm text-blue-600';
+                    }
+
+                    setTimeout(() => {
+                        if(formMessage){
+                            formMessage.textContent = '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.';
+                            formMessage.className = 'mt-4 text-sm text-green-600';
+                        }
+                        contactForm.reset();
+                        if(descriptionEnhancerStatus) descriptionEnhancerStatus.textContent = ''; // Limpiar estado de IA
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
