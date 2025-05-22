@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CimientosJP S.A.S. - Construimos cimientos sólidos para proyectos excepcionales. Diseño, construcción y consultoría profesional.">
+    <title>CimientosJP S.A.S. - Construcción, Diseño y Consultoría</title>
+    <style>
+        /* Variables CSS para mantener consistencia en el diseño */
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2c5282;
+            --accent-color: #ed8936;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+        }
+
+        /* Estilos para el contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navegación principal */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Botón móvil */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-dark);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 600px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><path fill="rgba(255,255,255,0.05)" d="M0,400 C200,200 400,600 600,400 C800,200 1000,600 1200,400 L1200,800 L0,800 Z"/></svg>') no-repeat center;
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #dd7919;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        /* Secciones */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Servicios */
+        .services {
+            background-color: var(--bg-light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background-color: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Sobre Nosotros */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .values-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .values-list li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .values-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Proyectos */
+        .projects {
+            background-color: var(--bg-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .project-image {
+            height: 250px;
+            background: linear-gradient(45deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Contacto */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .contact-info {
+            padding-left: 2rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                padding-left: 0;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /* Animaciones de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y Navegación -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">CimientosJP</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Construimos Cimientos Sólidos para Proyectos Excepcionales</h1>
+                <p>En CimientosJP S.A.S., transformamos visiones en realidad a través de diseño innovador, construcción de calidad y consultoría experta.</p>
+                <a href="#contacto" class="btn btn-primary">Solicita una Consulta</a>
+                <a href="#proyectos" class="btn btn-secondary">Ver Proyectos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios" class="services">
+        <div class="container">
+            <h2 class="section-title fade-in">Nuestros Servicios</h2>
+            <p class="section-subtitle fade-in">Ofrecemos soluciones integrales para cada etapa de su proyecto</p>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">📐</div>
+                    <h3>Diseño y Arquitectura</h3>
+                    <p>Creamos diseños innovadores y funcionales que maximizan el potencial de cada espacio, integrando estética, funcionalidad y sostenibilidad.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">💰</div>
+                    <h3>Análisis de Costos</h3>
+                    <p>Desarrollamos presupuestos detallados y análisis financieros precisos para garantizar la viabilidad económica de su proyecto.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">📋</div>
+                    <h3>Gestión de Licitaciones</h3>
+                    <p>Asesoramos y gestionamos todo el proceso de licitación, aumentando sus posibilidades de éxito en concursos públicos y privados.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Construcción General</h3>
+                    <p>Ejecutamos proyectos con los más altos estándares de calidad, cumpliendo plazos y presupuestos establecidos.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">💡</div>
+                    <h3>Consultoría Especializada</h3>
+                    <p>Brindamos asesoría experta en viabilidad, gestión de riesgos, sostenibilidad y optimización de recursos.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎯</div>
+                    <h3>Gestión de Proyectos</h3>
+                    <p>Coordinamos y supervisamos cada fase del proyecto, asegurando la excelencia en la ejecución y el cumplimiento de objetivos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="nosotros" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">Sobre Nosotros</h2>
+            <p class="section-subtitle fade-in">Compromiso, innovación y excelencia en cada proyecto</p>
+            
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h3>Nuestra Misión</h3>
+                    <p>En CimientosJP S.A.S., nos dedicamos a construir más que estructuras; construimos el futuro. Nuestra misión es proporcionar soluciones integrales de construcción que superen las expectativas de nuestros clientes, combinando innovación tecnológica, sostenibilidad ambiental y excelencia operacional.</p>
+                    
+                    <h3>Valores Corporativos</h3>
+                    <ul class="values-list">
+                        <li>Transparencia en cada proceso</li>
+                        <li>Innovación constante</li>
+                        <li>Calidad sin compromisos</li>
+                        <li>Compromiso con plazos y presupuestos</li>
+                        <li>Sostenibilidad ambiental</li>
+                        <li>Accesibilidad universal</li>
+                    </ul>
+                </div>
+                
+                <div class="about-image fade-in">
+                    <div style="background-color: var(--bg-light); height: 400px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--text-light);">
+                        <div style="text-align: center;">
+                            <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Juan Pablo Velásquez Prieto</h4>
+                            <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">CEO & Fundador</p>
+                            <p style="font-size: 0.9rem; max-width: 300px; margin: 0 auto;">Líder visionario con amplia experiencia en el sector de la construcción y un compromiso inquebrantable con la excelencia.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="proyectos" class="projects">
+        <div class="container">
+            <h2 class="section-title fade-in">Nuestros Proyectos</h2>
+            <p class="section-subtitle fade-in">Diseños conceptuales que demuestran nuestra capacidad y visión</p>
+            
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h3>Torre Empresarial Sostenible</h3>
+                        <p>Diseño conceptual de edificio corporativo con certificación LEED, 25 pisos, sistemas de energía renovable integrados.</p>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h3>Complejo Residencial Moderno</h3>
+                        <p>Desarrollo mixto con 200 unidades habitacionales, áreas verdes y servicios comunitarios integrados.</p>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h3>Centro Comercial Innovador</h3>
+                        <p>Espacio comercial de nueva generación con diseño bioclimático y experiencia de usuario optimizada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Contáctanos</h2>
+            <p class="section-subtitle fade-in">Estamos listos para hacer realidad su proyecto</p>
+            
+            <div class="contact-content">
+                <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Nombre Completo</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                </form>
+                
+                <div class="contact-info fade-in">
+                    <div class="contact-item">
+                        <h4>📧 Email</h4>
+                        <p>JUAN2001PA3.4@GMAIL.COM</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h4>📱 Teléfono</h4>
+                        <p>+57 300 123 4567</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h4>📍 Ubicación</h4>
+                        <p>Bogotá, Colombia</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h4>🕒 Horario</h4>
+                        <p>Lunes a Viernes: 8:00 AM - 6:00 PM<br>
+                        Sábados: 9:00 AM - 1:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CimientosJP S.A.S.</h4>
+                    <p>Construimos cimientos sólidos para proyectos excepcionales. Transformando visiones en realidad desde Colombia.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#nosotros">Sobre Nosotros</a></li>
+                        <li><a href="#proyectos">Proyectos</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Políticas Legales</h4>
+                    <ul>
+                        <li><a href="#politica-reembolso">Política de Reembolso</a></li>
+                        <li><a href="#terminos">Términos y Condiciones</a></li>
+                        <li><a href="#privacidad">Política de Privacidad</a></li>
+                        <li><a href="#accesibilidad">Declaración de Accesibilidad</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Síguenos</h4>
+                    <p>Mantente actualizado con nuestros últimos proyectos y noticias del sector.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 CimientosJP S.A.S. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Función para manejar el menú móvil
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Función para manejar el envío del formulario
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Gracias por contactarnos. Nos pondremos en contacto contigo pronto.');
+            event.target.reset();
+        }
+
+        // Animación de aparición al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos los elementos con la clase fade-in
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Cambiar el estilo del header al hacer scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.backgroundColor = 'var(--bg-white)';
+                header.style.boxShadow = 'var(--shadow)';
+            }
+        });
+    </script>
+</body>
+</html>
